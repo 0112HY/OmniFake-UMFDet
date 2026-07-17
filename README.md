@@ -28,7 +28,7 @@ Multimodal misinformation on social media includes both human-crafted misinforma
 
 OmniFake-UMFDet provides an open implementation for a unified misinformation detection setting. The benchmark covers real posts, human-crafted rumors, vision manipulation, text manipulation, and mixed manipulation. UMFDet builds on a vision-language model backbone and introduces category-aware expert modeling to improve recognition across heterogeneous misinformation types.
 
-This repository contains the training, evaluation, dataset loading code, and model definition files. Large pretrained weights are intentionally not committed to GitHub and should be downloaded separately.
+This repository contains the training, evaluation, dataset loading code, and model definition files. Large pretrained weights are intentionally released separately.
 
 ## Links
 
@@ -64,24 +64,21 @@ OmniFake-UMFDet/
 
 ## Installation
 
-Create a clean Python environment:
+Create and activate the environment:
 
 ```bash
-conda create -n umfdet python=3.10 -y
-conda activate umfdet
-```
-
-Install PyTorch according to your CUDA version. For example:
-
-```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-```
-
-Install the remaining dependencies:
-
-```bash
+conda create -n REFORM python=3.10
+conda activate REFORM
 pip install -r requirements.txt
 ```
+
+UMFDet uses FlashAttention. If you encounter issues with flash-attn, you can fix it with:
+
+```bash
+pip install -U flash-attn --no-build-isolation
+```
+
+Alternatively, visit the [flash-attention releases page](https://github.com/Dao-AILab/flash-attention/releases) to find the version compatible with your CUDA, PyTorch, and Python environment.
 
 ## Dataset Preparation
 
@@ -111,37 +108,45 @@ text_manipulation
 mixed_manipulation
 ```
 
-Before training or evaluation, set the CSV paths and image root paths in `train.py` and `evaluate.py` according to your local dataset location.
+Before training or evaluation, configure the corresponding dataset CSV path, image path, and model path directly in `train.py` and `evaluate.py`.
 
 ## Model Weights
 
-The repository includes the model architecture and processor-related files under `model/`, but does not include large checkpoint files.
+The repository includes the model architecture and processor-related files under `model/`, but does not include large checkpoint weights.
 
-After downloading the pretrained weights, place them under:
+To train UMFDet, you need to download the pretrained [Florence-2 base model](https://huggingface.co/microsoft/Florence-2-base-ft/tree/main). After downloading, place the `pytorch_model.bin` file into the `model/` directory, or set the model path in the scripts to your downloaded checkpoint directory.
+
+The fine-tuned UMFDet checkpoint will be released separately. After downloading the fine-tuned weights, place them under:
 
 ```text
 model/model.safetensors
 ```
 
-or use the checkpoint directory path directly as the model path in the scripts.
-
-Do not commit checkpoint files to GitHub. The `.gitignore` file excludes common weight formats such as `.safetensors`, `.bin`, `.pt`, `.pth`, and `.ckpt`.
+or set `model_root_path` / `Model_Path` to the checkpoint directory.
 
 ## Training
 
-Edit the following placeholders in `train.py` before running:
+Configure the dataset and model paths in `train.py` before running:
 
 ```python
-train_csv_path_str = ""
-model_root_path = ""
+train_csv_path_str = "path/to/train.csv"
+model_root_path = "path/to/model_or_checkpoint"
+
+train_dataset = FakeDataset(
+    csv_file_path=train_csv_path_str,
+    image_directory_path="path/to/train/images"
+)
+
+val_datasets = {"fakenews": FakeDataset(
+    csv_file_path="path/to/val.csv",
+    image_directory_path="path/to/val/images"
+)}
 ```
 
-Also set the validation CSV path and image directory path in the `FakeDataset` construction block.
-
-Run distributed training with all visible GPUs:
+Then run distributed training:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py \
+python train.py \
   --dataset fakenews \
   --batch-size 24 \
   --epochs 10 \
@@ -157,12 +162,15 @@ For LoRA training, add:
 
 ## Evaluation
 
-Edit the following placeholders in `evaluate.py` before running:
+Configure the dataset and model paths in `evaluate.py` before running:
 
 ```python
-Model_Path = ""
-csv_file_path = ""
-image_directory_path = ""
+Model_Path = "path/to/model_or_checkpoint"
+
+test_dataset = FakeDataset(
+    csv_file_path="path/to/test.csv",
+    image_directory_path="path/to/test/images"
+)
 ```
 
 Then run:
@@ -172,16 +180,6 @@ python evaluate.py
 ```
 
 The script reports both five-class and binary real/fake metrics, including accuracy, per-class precision, recall, F1-score, and a confusion matrix.
-
-## Prompt Format
-
-UMFDet uses the following task prompt prefix:
-
-```text
-<DETECTION_NEWS>
-```
-
-Each input is formatted as a multimodal fake news classification task with one image and one news title. The model is required to output exactly one of the five categories listed above.
 
 ## Citation
 
@@ -202,4 +200,3 @@ If you find this repository useful for your research, please cite our paper:
 ## Acknowledgements
 
 This implementation builds on the Florence-2 vision-language modeling interface and the Hugging Face Transformers ecosystem. We thank the open-source community for providing the tools that make reproducible multimodal research possible.
-
