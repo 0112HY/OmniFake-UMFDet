@@ -35,7 +35,6 @@ This repository contains the training, evaluation, dataset loading code, and mod
 | Resource | Link |
 | --- | --- |
 | Project page | https://0112hy.github.io/OmniFakeWeb/ |
-| Paper | https://arxiv.org/abs/2509.25991 |
 | arXiv | https://arxiv.org/abs/2509.25991 |
 | Dataset | https://huggingface.co/datasets/hy1228/OmniFake98K |
 | Code | https://github.com/0112HY/OmniFake-UMFDet |
@@ -203,3 +202,4 @@ If you find this repository useful for your research, please cite our paper:
 ## Acknowledgements
 
 This implementation builds on the Florence-2 vision-language modeling interface and the Hugging Face Transformers ecosystem. We thank the open-source community for providing the tools that make reproducible multimodal research possible.
+
