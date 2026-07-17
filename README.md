@@ -1,4 +1,4 @@
-﻿# OmniFake-UMFDet: Towards Unified Multimodal Misinformation Detection in Social Media
+﻿# Towards Unified Multimodal Misinformation Detection in Social Media:  A Benchmark Dataset and Baseline
 
 <p align="center">
   <a href="https://0112hy.github.io/OmniFakeWeb/"><strong>Project Page</strong></a> |
