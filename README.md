@@ -37,7 +37,6 @@ This repository contains the training, evaluation, dataset loading code, and mod
 | Project page | https://0112hy.github.io/OmniFakeWeb/ |
 | arXiv | https://arxiv.org/abs/2509.25991 |
 | Dataset | https://huggingface.co/datasets/hy1228/OmniFake98K |
-| Code | https://github.com/0112HY/OmniFake-UMFDet |
 | Model weights | https://drive.google.com/file/d/1Q8gEWHZPxwxatYsTsF1Wk7PLNJByt6cB/view?usp=sharing. Place the downloaded weights under `model/`. |
 
 ## Repository Structure
