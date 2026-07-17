@@ -335,20 +335,21 @@ def train_model(rank, world_size, dataset_name, batch_size=6, use_lora=False, ep
             "cauldron": TheCauldronDataset(split='validation'),
             "docvqa": DocVQADataset(split='validation')
         }
+    #train & val path and image directory path should be specified here    
     elif dataset_name == 'fakenews':
-        train_csv_path_str = "/data1/hy/OmniFake_final_10K_with_visual/train_final_balanced_clean_with_bbox.csv"
+        train_csv_path_str = ""
         train_dataset = FakeDataset(
             csv_file_path=train_csv_path_str,
-            image_directory_path="/data1/hy/OmniFake_final_10K_with_visual/"
+            image_directory_path=""
         )
         val_datasets = {"fakenews": FakeDataset(
-            csv_file_path="/data1/hy/OmniFake_final_10K_with_visual/val_final_balanced_clean_with_bbox.csv",
-            image_directory_path="/data1/hy/OmniFake_final_10K_with_visual/"
+            csv_file_path="",
+            image_directory_path=""
         )}
     else:
         raise ValueError(f"Unknown dataset: {dataset_name}")
-
-    model_root_path = "/data1/hy/huggingface_model/Florence-2-base-moe_edr_cca"
+    #model path should be specified here
+    model_root_path = ""
 
     model = AutoModelForCausalLM.from_pretrained(
         model_root_path, trust_remote_code=True
@@ -361,11 +362,11 @@ def train_model(rank, world_size, dataset_name, batch_size=6, use_lora=False, ep
         model.language_model.cca_loss_weight = CCA_LOSS_WEIGHT
 
     if rank == 0:
-        print(f"[rank {rank}] >>> 前 2 条训练样本:")
+        print(f"[rank {rank}] >>> data check:")
         for i in range(min(2, len(train_dataset))):
             print(f"  [{i}]", train_dataset[i])
         for name, val_ds in val_datasets.items():
-            print(f"[rank {rank}] >>> 验证集 '{name}' 的前 2 条样本:")
+            print(f"[rank {rank}] >>> data check:")
             for i in range(min(2, len(val_ds))):
                 print(f"  [{i}]", val_ds[i])
 
