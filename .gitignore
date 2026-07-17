@@ -1,0 +1,23 @@
+﻿__pycache__/
+*.pyc
+.cache/
+.env
+
+.DS_Store
+Thumbs.db
+
+# Local data and experiment outputs
+data/
+datasets/
+checkpoints/
+outputs/
+logs/
+runs/
+wandb/
+
+# Model weights are released separately; do not commit large checkpoints.
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt

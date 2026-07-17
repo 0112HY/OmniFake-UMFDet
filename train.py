@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import os
 import re
 from functools import partial
@@ -15,7 +15,7 @@ from transformers import (AdamW, AutoModelForCausalLM, AutoProcessor,
                           get_scheduler)
 import random
 from peft import LoraConfig, get_peft_model
-from dataset_backbone import FakeDataset, PROMPT_TEMPLATE
+from dataset import FakeDataset, PROMPT_TEMPLATE
 
 
 
@@ -306,7 +306,7 @@ def metric_selection_key(metrics):
 
 def train_model(rank, world_size, dataset_name, batch_size=6, use_lora=False, epochs=15, lr=1e-6, eval_steps=1000, run_name=None, max_val_item_count=1000):
     setup(rank, world_size)
-    print(f"[rank {rank}] → cuda:{torch.cuda.current_device()} ({torch.cuda.get_device_name()})")
+    print(f"[rank {rank}] 鈫?cuda:{torch.cuda.current_device()} ({torch.cuda.get_device_name()})")
 
     device = torch.device(f"cuda:{rank}")
     if run_name is None:
@@ -494,7 +494,7 @@ def train_model(rank, world_size, dataset_name, batch_size=6, use_lora=False, ep
 
         if rank == 0:
             print(
-                f"Epoch {epoch+1}/{epochs} — Train Loss: {avg_train_loss:.4f} "
+                f"Epoch {epoch+1}/{epochs} 鈥?Train Loss: {avg_train_loss:.4f} "
                 f"| EDR: {avg_train_edr_loss:.4f} "
                 f"CCA: {avg_train_cca_loss:.4f} "
                 f"AUX: {avg_train_aux_loss:.4f}"
@@ -554,3 +554,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

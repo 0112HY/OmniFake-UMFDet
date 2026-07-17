@@ -1,4 +1,4 @@
-
+﻿
 import logging
 import random
 import inspect
@@ -13,7 +13,7 @@ from sklearn.metrics import (
     confusion_matrix,
 )
 
-from dataset_backbone import FakeDataset, PROMPT_TEMPLATE
+from dataset import FakeDataset, PROMPT_TEMPLATE
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # ---------------------- Model & Processor ----------------------
@@ -92,7 +92,7 @@ def evaluate_model(test_loader):
     y_true_2class = []
     y_pred_2class = []
     
-    print("\n🚀 evaluate being...\n")
+    print("\n馃殌 evaluate being...\n")
 
     for batch_idx, (inputs, batch_answers) in enumerate(tqdm(test_loader, desc="Evaluating")):
         generated_texts = run_batch(inputs)
@@ -134,23 +134,23 @@ def evaluate_model(test_loader):
 
     
     print("\n" + "="*60)
-    print(" 📊 (5-Class Evaluation)")
+    print(" 馃搳 (5-Class Evaluation)")
     print("="*60)
     acc_5 = accuracy_score(y_true_5class, y_pred_5class)
-    print(f"✅ Overall 5-Class Accuracy: {acc_5:.4f}\n")
-    print("🔍  (Per-class Precision, Recall, F1):")
+    print(f"鉁?Overall 5-Class Accuracy: {acc_5:.4f}\n")
+    print("馃攳  (Per-class Precision, Recall, F1):")
     print(classification_report(y_true_5class, y_pred_5class, digits=4))
     
     print("\n" + "="*60)
-    print(" 📊  (2-Class: Real vs Fake)")
+    print(" 馃搳  (2-Class: Real vs Fake)")
     print("="*60)
     acc_2 = accuracy_score(y_true_2class, y_pred_2class)
-    print(f"✅ Overall 2-Class Accuracy: {acc_2:.4f}\n")
-    print("🔍  (Per-class Precision, Recall, F1):")
+    print(f"鉁?Overall 2-Class Accuracy: {acc_2:.4f}\n")
+    print("馃攳  (Per-class Precision, Recall, F1):")
     print(classification_report(y_true_2class, y_pred_2class, digits=4))
     
     print("\n" + "="*60)
-    print(" 🧠  (Confusion Matrix)")
+    print(" 馃  (Confusion Matrix)")
     print("="*60)
     labels_5 = sorted(list(set(y_true_5class))) 
     cm = confusion_matrix(y_true_5class, y_pred_5class, labels=labels_5)
