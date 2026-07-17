@@ -67,8 +67,8 @@ OmniFake-UMFDet/
 Create and activate the environment:
 
 ```bash
-conda create -n REFORM python=3.10
-conda activate REFORM
+conda create -n UMFDet python=3.10
+conda activate UMFDet 
 pip install -r requirements.txt
 ```
 
