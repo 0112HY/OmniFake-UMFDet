@@ -38,7 +38,7 @@ This repository contains the training, evaluation, dataset loading code, and mod
 | arXiv | https://arxiv.org/abs/2509.25991 |
 | Dataset | https://huggingface.co/datasets/hy1228/OmniFake98K |
 | Code | https://github.com/0112HY/OmniFake-UMFDet |
-| Model weights | Coming soon. Place the downloaded weights under `model/`. |
+| Model weights | https://drive.google.com/file/d/1Q8gEWHZPxwxatYsTsF1Wk7PLNJByt6cB/view?usp=sharing. Place the downloaded weights under `model/`. |
 
 ## Repository Structure
 
@@ -114,7 +114,7 @@ Before training or evaluation, configure the corresponding dataset CSV path, ima
 
 The repository includes the model architecture and processor-related files under `model/`, but does not include large checkpoint weights.
 
-To train UMFDet, you need to download the pretrained [Florence-2 base model](https://huggingface.co/microsoft/Florence-2-base-ft/tree/main). After downloading, place the `pytorch_model.bin` file into the `model/` directory, or set the model path in the scripts to your downloaded checkpoint directory.
+To train UMFDet, you need to download the Model weights https://drive.google.com/file/d/1Q8gEWHZPxwxatYsTsF1Wk7PLNJByt6cB/view?usp=sharing. After downloading, place the `model.safetensors` file into the `model/` directory, or set the model path in the scripts to your downloaded checkpoint directory.
 
 The fine-tuned UMFDet checkpoint will be released separately. After downloading the fine-tuned weights, place them under:
 
