@@ -2247,7 +2247,7 @@ class Florence2LanguageModel(Florence2LanguagePreTrainedModel):
             dim_head=64,
             mult=4,
             dropout=0.1,
-            num_experts=5,
+            num_experts=3,
             depth=1
         )
         self.post_moe_layernorm = nn.LayerNorm(config.d_model)
